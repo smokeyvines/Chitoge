@@ -62,12 +62,12 @@ export default class MessageHandler {
         )
         if (!command) return void M.reply('No such command, Baka! Have you never seen someone use the command *#help*.')
         const user = await this.client.getUser(M.sender.jid)
-        if (user.ban) return void M.reply("You're Banned from using commands.")
+        if (user.ban) return void M.reply("Offset hacker Banned You from using commands.")
         const state = await this.client.DB.disabledcommands.findOne({ command: command.config.command })
         if (state) return void M.reply(`✖ This command is disabled${state.reason ? ` for ${state.reason}` : ''}`)
-        if (!command.config?.dm && M.chat === 'dm') return void M.reply('This command can only be used in groups')
+        if (!command.config?.dm && M.chat === 'dm') return void M.reply('Commands Cannot be used in direct messages.*Send a message without a prefix to have a chat.')
         if (command.config?.adminOnly && !M.sender.isAdmin)
-            return void M.reply(`Only admins are allowed to use this command`)
+            return void M.reply(`This command can only be used by admins`)
         try {
             await command.run(M, this.parseArgs(args))
             if (command.config.baseXp) {
